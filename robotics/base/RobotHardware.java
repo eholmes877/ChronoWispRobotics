@@ -2,6 +2,8 @@ package edu.elon.robotics.base;
 
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.hardware.rev.RevTouchSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -20,7 +22,14 @@ public class RobotHardware {
     // control hub imu
     public IMU imu;
 
+    //sensors
+    public RevTouchSensor touchSensor;
+    public ColorSensor colorSensor;
+
     public final KiwiDriveRatio ratio;
+
+    public int maxBrightness;
+    public int minBrightness;
 
     public final double TICKS_PER_ROTATION = 537.7;
     public final double WHEEL_CIRCUMFERENCE = 30.1593;
@@ -83,6 +92,9 @@ public class RobotHardware {
 // now initialize the IMU with this mounting orientation
 // this assumes the IMU to be in a REV Control Hub is named "imu"
         imu = hardwareMap.get(IMU.class, "imu");
+        touchSensor = hardwareMap.get(RevTouchSensor.class, "touchSensor");
+        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        colorSensor.enableLed(true);
         imu.initialize(new IMU.Parameters(orientationOnRobot));
 
 // define the current direction as 0
