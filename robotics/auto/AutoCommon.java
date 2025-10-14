@@ -23,6 +23,8 @@ public class AutoCommon extends LinearOpMode {
     //number of degrees that will be done using the slow power
     private final double SLOW_DOWN_DEGREES = 15.0;
 
+    private final double KP = 0.05;
+
     protected RobotHardware robot;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -66,13 +68,14 @@ public class AutoCommon extends LinearOpMode {
 
     protected void driveIMU(double cm, double power) {
         robot.resetDriveEncoders();
-        if (cm < 0) {
-            robot.startMove(-Math.abs(power), 0.0, 0.0);
-        }
-        else {
-            robot.startMove(Math.abs(power), 0.0, 0.0);
-        }
+        robot.imu.resetYaw();
+        robot.startMove(power, 0.0, 0.0);
+        // moving forwards/backwards
         while (opModeIsActive() && Math.abs(robot.motorLeft.getCurrentPosition()) < Math.abs(robot.convertDistanceToTicks(cm))) {
+            double strafeAdjustment = 0.0;
+            double YawllDrive = robot.getHeading();
+            strafeAdjustment = YawllDrive * KP;
+            robot.motorAux.setPower(strafeAdjustment); // forward/backward movement, flip sign if opp. dir.
             System.out.println("TESTING: " + Math.abs(robot.motorLeft.getCurrentPosition()) + " with distance: " + Math.abs(robot.convertDistanceToTicks(cm)));
         }
         robot.startMove(0.0, 0.0, 0.0);
@@ -128,5 +131,40 @@ public class AutoCommon extends LinearOpMode {
             //System.out.println("TESTING: " + Math.abs(monitor.getCurrentPosition()));
         }
         robot.startMove(0.0, 0.0, 0.0);
+    }
+
+    protected void driveUntilTouch(double power) {
+        robot.resetDriveEncoders();
+        robot.startMove(power, 0.0, 0.0);
+        while(opModeIsActive()){
+            if (robot.touchSensor.isPressed()) {
+                robot.startMove(0.0, 0.0, 0.0);
+                break;
+            }
+
+        }
+        System.out.println("NEW FRUNK YEAH");
+//        robot.motorLeft.getCurrentPosition();
+//        while (robot.motorLeft.getCurrentPosition() > 0) {
+//            robot.startMove(-power, 0.0, 0.0);
+//        }
+//        robot.startMove(0.0, 0.0, 0.0);
+
+    }
+
+    protected void driveToCalibrateLightSensor() {
+        robot.maxBrightness = -1;
+        robot.minBrightness = Integer.MAX_VALUE;
+        robot.startMove(0.3, 0.0, 0.0);
+
+        while (opModeIsActive() && Math.abs(robot.motorLeft.getCurrentPosition()) < Math.abs(robot.convertDistanceToTicks(20))) {
+            int lightIntensity = robot.colorSensor.alpha();
+            if (lightIntensity < robot.minBrightness) {robot.minBrightness = lightIntensity;}
+            else if (lightIntensity > robot.maxBrightness) {robot.maxBrightness = lightIntensity;}
+        }
+        System.out.println("MAX BRIGHTNESS: " + robot.maxBrightness);
+        System.out.println("MIN BRIGHTNESS: " + robot.minBrightness);
+        robot.startMove(0.0, 0.0, 0.0);
+
     }
 }
