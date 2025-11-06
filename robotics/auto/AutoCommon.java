@@ -15,7 +15,7 @@ import edu.elon.robotics.base.RobotHardware;
 public class AutoCommon extends LinearOpMode {
 
     //how many degrees to adjust the requested degree angle by
-    private final double ANGLE_OVERSHOOT = 2.0;
+    private final double ANGLE_OVERSHOOT = 5.0;
 
     //slow power of the motor for the final part of the turn
     private final double TURN_ENDING_POWER = 0.15;
