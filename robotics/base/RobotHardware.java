@@ -1,6 +1,7 @@
 package edu.elon.robotics.base;
 
 
+import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -25,6 +26,7 @@ public class RobotHardware {
     //sensors
     public RevTouchSensor touchSensor;
     public ColorSensor colorSensor;
+    public Rev2mDistanceSensor distanceSensor;
 
     public final KiwiDriveRatio ratio;
 
@@ -95,7 +97,9 @@ public class RobotHardware {
         touchSensor = hardwareMap.get(RevTouchSensor.class, "touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         colorSensor.enableLed(true);
+        distanceSensor = hardwareMap.get(Rev2mDistanceSensor.class, "distanceSensor");
         imu.initialize(new IMU.Parameters(orientationOnRobot));
+
 
 // define the current direction as 0
         imu.resetYaw();
