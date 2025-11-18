@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -22,6 +23,11 @@ public class RobotHardware {
 
     // control hub imu
     public IMU imu;
+
+    // servos
+    public Servo servoShoulder;
+    public Servo servoElbow;
+    public Servo servoGripper;
 
     //sensors
     public RevTouchSensor touchSensor;
@@ -90,6 +96,11 @@ public class RobotHardware {
         // set this orientation
         RevHubOrientationOnRobot orientationOnRobot = new
                 RevHubOrientationOnRobot(logoDirection, usbDirection);
+
+        // code to get access to the servos
+        servoShoulder = hardwareMap.get(Servo.class, "servoShoulder");
+        servoElbow = hardwareMap.get(Servo.class, "servoElbow");
+        servoGripper = hardwareMap.get(Servo.class, "servoGripper");
 
 // now initialize the IMU with this mounting orientation
 // this assumes the IMU to be in a REV Control Hub is named "imu"
