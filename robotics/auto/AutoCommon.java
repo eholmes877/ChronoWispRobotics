@@ -76,7 +76,7 @@ public class AutoCommon extends LinearOpMode {
             double YawllDrive = robot.getHeading();
             strafeAdjustment = YawllDrive * KP;
             robot.motorAux.setPower(strafeAdjustment); // forward/backward movement, flip sign if opp. dir.
-            System.out.println("TESTING: " + Math.abs(robot.motorLeft.getCurrentPosition()) + " with distance: " + Math.abs(robot.convertDistanceToTicks(cm)));
+            //System.out.println("TESTING: " + Math.abs(robot.motorLeft.getCurrentPosition()) + " with distance: " + Math.abs(robot.convertDistanceToTicks(cm)));
         }
         robot.startMove(0.0, 0.0, 0.0);
     }
