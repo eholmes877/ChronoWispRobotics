@@ -30,9 +30,11 @@ public class RobotHardware {
     public Servo servoGripper;
 
     //sensors
-    public RevTouchSensor touchSensor;
+    //public RevTouchSensor touchSensor;
     public ColorSensor colorSensor;
     public Rev2mDistanceSensor distanceSensor;
+    
+    public Rev2mDistanceSensor distanceSensorFront;
 
     public final KiwiDriveRatio ratio;
 
@@ -105,10 +107,11 @@ public class RobotHardware {
 // now initialize the IMU with this mounting orientation
 // this assumes the IMU to be in a REV Control Hub is named "imu"
         imu = hardwareMap.get(IMU.class, "imu");
-        touchSensor = hardwareMap.get(RevTouchSensor.class, "touchSensor");
+        //touchSensor = hardwareMap.get(RevTouchSensor.class, "touchSensor");
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         colorSensor.enableLed(true);
         distanceSensor = hardwareMap.get(Rev2mDistanceSensor.class, "distanceSensor");
+        distanceSensorFront = hardwareMap.get(Rev2mDistanceSensor.class, "distanceSensorFront");
         imu.initialize(new IMU.Parameters(orientationOnRobot));
 
 
