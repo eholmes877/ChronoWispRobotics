@@ -25,17 +25,20 @@ public class ServoCycle extends LinearOpMode {
 
         /*
          * You should find min/max values for all of your servos.
+         * shoulder: min: 0.15; max: 0.95; DROP: 0.45
+         * elbow: min: 0.0; max: 1.0; DROP: 0.3
+         * gripper: min: 0.3; max: 0.95; OPEN: 0.7; CLOSED: 0.4
          * These value are used to keep the servos from breaking
          * the arm or burning out the servo.
-         *
          * The assumption is that 0.5 is a good starting position.
          * You could find a different initial position if you want.
          */
+
         // define the arm servos
         ControlledServo[] servos = {
-                new ControlledServo(robot.servoShoulder, "shoulder", 0.5, 0.15, 0.85),
+                new ControlledServo(robot.servoShoulder, "shoulder", 0.5, 0.15, 0.95),
                 new ControlledServo(robot.servoElbow, "elbow", 0.5, 0.0, 1.0),
-                new ControlledServo(robot.servoGripper, "gripper", 0.5, 0.15, 0.55)
+                new ControlledServo(robot.servoGripper, "gripper", 0.5, 0.3, 0.95)
         };
         int which_servo = 0;
 
