@@ -29,10 +29,30 @@ public class LuckyDuckAuto extends AutoCommon {
         super.runOpMode();
         waitForStart();
 
-        shoulder.update();
-        elbow.update();
-        gripper.update();
+        updateAll();
 
+        findBoxSide();
+        driveIMU(55, 0.3);
+        shoulder.setPosition(SHOULDER_DOWN);
+        elbow.setPosition(ELBOW_DOWN);
+        gripper.setPosition(GRIPPER_OPEN);
+        updateAll();
+        sleep(500);
+        gripper.setPosition(GRIPPER_CLOSED);
+        updateAll();
+        sleep(2000);
+        shoulder.setPosition(SHOULDER_UP);
+        elbow.setPosition(ELBOW_UP);
+        updateAll();
+        driveDistance(0.0, -50, 0.3);
+        driveIMU(3, 0.3);
+        gripper.setPosition(GRIPPER_OPEN);
+        updateAll();
+        sleep(2000);
+
+    }
+
+    public void findBoxSide() {
         robot.maxBrightness = 480;
         robot.minBrightness = Integer.MAX_VALUE;
         robot.startMove(0.0, 0.3, 0.0);
@@ -55,19 +75,11 @@ public class LuckyDuckAuto extends AutoCommon {
         System.out.println("MAX BRIGHTNESS: " + robot.maxBrightness);
         System.out.println("MIN BRIGHTNESS: " + robot.minBrightness);
         sleep(2000);
+    }
 
-        driveIMU(50, 0.3);
-        shoulder.setPosition(SHOULDER_DOWN);
-        elbow.setPosition(ELBOW_DOWN);
-        gripper.setPosition(GRIPPER_OPEN);
-        sleep(500);
-        gripper.setPosition(GRIPPER_CLOSED);
-        sleep(2000);
-        shoulder.setPosition(SHOULDER_UP);
-        elbow.setPosition(ELBOW_UP);
-        driveDistance(0.0, 50, 0.3);
-        gripper.setPosition(GRIPPER_OPEN);
-        sleep(2000);
-
+    public void updateAll() {
+        shoulder.update();
+        elbow.update();
+        gripper.update();
     }
 }
