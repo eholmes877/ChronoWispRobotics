@@ -16,8 +16,10 @@ public class LuckyDuckAuto extends AutoCommon {
     private final double ELBOW_DOWN = 1.0;
     private final double GRIPPER_OPEN = 0.75;
     private final double GRIPPER_CLOSED = 0.30;
-    
-    private double goalDistance = 0;
+
+    private static double goalDistance = -50;
+    private static double forwardDistance = 55;
+    private static double extraPush = 3;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -34,7 +36,7 @@ public class LuckyDuckAuto extends AutoCommon {
         updateAll();
 
         findBoxSide();
-        driveIMU(55, 0.3);
+        driveIMU(forwardDistance, 0.3);
         shoulder.setPosition(SHOULDER_DOWN);
         elbow.setPosition(ELBOW_DOWN);
         gripper.setPosition(GRIPPER_OPEN);
@@ -47,7 +49,7 @@ public class LuckyDuckAuto extends AutoCommon {
         elbow.setPosition(ELBOW_UP);
         updateAll();
         driveDistance(0.0, goalDistance, 0.3);
-        driveIMU(3, 0.3);
+        driveIMU(extraPush, 0.3);
         gripper.setPosition(GRIPPER_OPEN);
         updateAll();
         sleep(2000);
