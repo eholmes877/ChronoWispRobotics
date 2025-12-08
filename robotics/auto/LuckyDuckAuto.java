@@ -16,6 +16,8 @@ public class LuckyDuckAuto extends AutoCommon {
     private final double ELBOW_DOWN = 1.0;
     private final double GRIPPER_OPEN = 0.75;
     private final double GRIPPER_CLOSED = 0.30;
+    
+    private double goalDistance = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -44,7 +46,7 @@ public class LuckyDuckAuto extends AutoCommon {
         shoulder.setPosition(SHOULDER_UP);
         elbow.setPosition(ELBOW_UP);
         updateAll();
-        driveDistance(0.0, -50, 0.3);
+        driveDistance(0.0, goalDistance, 0.3);
         driveIMU(3, 0.3);
         gripper.setPosition(GRIPPER_OPEN);
         updateAll();
@@ -60,7 +62,7 @@ public class LuckyDuckAuto extends AutoCommon {
         while (opModeIsActive() && Math.abs(robot.motorAux.getCurrentPosition()) < Math.abs(robot.convertDistanceToTicks(15))) {
             int lightIntensity = robot.colorSensor.alpha();
             if (lightIntensity < robot.minBrightness) {robot.minBrightness = lightIntensity;}
-            else if (lightIntensity > robot.maxBrightness) {robot.maxBrightness = lightIntensity; break;}
+            else if (lightIntensity > robot.maxBrightness) {robot.maxBrightness = lightIntensity; goalDistance = 100; break;}
         }
         robot.startMove(0.0, 0.0, 0.0);
         sleep(500);
@@ -68,8 +70,8 @@ public class LuckyDuckAuto extends AutoCommon {
         while (opModeIsActive() && Math.abs(robot.motorAux.getCurrentPosition()) < Math.abs(robot.convertDistanceToTicks(-30))) {
             int lightIntensity = robot.colorSensor.alpha();
             if (lightIntensity < robot.minBrightness) {robot.minBrightness = lightIntensity;}
-            else if (lightIntensity > robot.maxBrightness) {robot.maxBrightness = lightIntensity; break;}
-            else if (robot.maxBrightness > 500) {break;}
+            else if (lightIntensity > robot.maxBrightness) {robot.maxBrightness = lightIntensity; goalDistance = -50; break;}
+            else if (robot.maxBrightness > 480) {break;}
         }
         robot.startMove(0.0, 0.0, 0.0);
         System.out.println("MAX BRIGHTNESS: " + robot.maxBrightness);
